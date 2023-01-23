@@ -7,7 +7,7 @@ import {
   AiOutlineDelete,
   AiOutlineEdit,
 } from "react-icons/ai";
-import { deleteFile, getUrl } from "@/firebase/config";
+import { deleteFile, getUrl } from "../firebase/api";
 import Link from "next/link";
 
 const productos = () => {
@@ -99,29 +99,29 @@ const productos = () => {
               <th className="p-2">Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-gray-200">
             {products.filter(searchingTerm(term)).map((product) => (
-              <tr className="border-b" key={product.id}>
-                <td className="p-2 justify-center items-center">
+              <tr className="border-b border-white text-center" key={product.id}>
+                <td className="p-2 items-center">
                   <Link href={product.url} target="_blank">
-                    <img src={product.url} className="w-24 h-24" />
+                    <img src={product.url} className="w-24 h-24 rounded-md" />
                   </Link>
                 </td>
 
-                <td className="p-2 justify-center items-center">
+                <td className="p-2">
                   <p className="text-gray-800">{product.name}</p>
                 </td>
 
-                <td className="p-2 justify-center items-center">
+                <td className="p-2">
                   <p className="text-gray-600"> {product.description} </p>
                 </td>
 
-                <td className="p-2 flex justify-center items-center">
+                <td className="p-2">
                   <p className="text-gray-600"> {product.code} </p>
                 </td>
-                <td className="p-2 justify-center items-center">
+                <td className="p-2">
                   <button
-                    className="border-2 p-2 hover:bg-red-600"
+                    className="border-2 p-2 bg-white rounded-sm border-gray-300 mr-2 hover:bg-red-600"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDeleteProduct(product.id, product.image);
@@ -130,7 +130,7 @@ const productos = () => {
                     <AiOutlineDelete />
                   </button>
                   <button
-                    className="border-2 p-2 hover:bg-green-600"
+                    className="border-2 p-2 bg-white rounded-sm border-gray-300 hover:bg-green-600"
                     onClick={() => router.push(`/formulario/${product.id}`)}
                   >
                     <AiOutlineEdit />

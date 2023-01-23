@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { saveProduct, getProduct, updateProduct } from "../../firebase/api";
 import { useRouter } from "next/router";
-import { uploadFile, getUrl } from "@/firebase/config";
+import { uploadFile, getUrl, deleteFile } from "../../firebase/api";
 
 const initialState = {
   name: "",
@@ -29,6 +29,11 @@ const Formulario = (props) => {
       product.url = await getUrl(product.image);
       await saveProduct(product);
     } else {
+      if(file) {
+        await deleteFile(product.image);
+        product.image = await uploadFile(file);
+        product.url = await getUrl(product.image);
+      }
       await updateProduct(id, product);
       router.push("/productos");
     }
@@ -102,7 +107,7 @@ const Formulario = (props) => {
             <div className="flex justify-around items-center">
               <input type="file" onChange={(e) => setFile(e.target.files[0])} />
               <button className="bg-cyan-900 text-white p-2 rounded-md justify-end">
-                Registrar
+                Finalizar
               </button>
             </div>
           </form>

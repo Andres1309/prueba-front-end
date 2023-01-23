@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, snapshot } from "firebase/firestore";
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import {v4} from "uuid"
+import {
+  getStorage,
+} from "firebase/storage";
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -18,22 +19,4 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore();
 
-export const storage = getStorage(app)
-
-export async function uploadFile(file) {
-  const name = v4()
-  const storageRef = ref(storage, name)
-   await uploadBytes(storageRef, file)
-  return(name)
-}
-
-export async function getUrl(file) {
-  const storage = getStorage()
-  const url = await getDownloadURL(ref(storage, file))
-  return url
-}
-
-export async function deleteFile(file) {
-  const storage = getStorage()
-  await deleteObject(ref(storage, file))
-}
+export const storage = getStorage(app);
